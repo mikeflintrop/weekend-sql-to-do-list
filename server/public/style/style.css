@@ -1,0 +1,59 @@
+header {
+background-color: aqua;
+
+}
+
+table, th, td {
+    border: 1px;
+    border-collapse: collapse;
+    border-style: solid;
+
+}
+
+tr:nth-child(even){
+    background-color: lightgrey;
+}
+
+tr:hover{
+    background-color: rgb(255, 198, 92);
+}
+
+h1 {
+    font-family: verdana;
+    font-size: 20px;
+}
+
+button {
+    border-radius: 10px;
+}
+
+button:hover{
+    background-color: lightgreen;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0.5, 0, 0.5);
+}
+#deleteBtn:hover {
+    background-color: lightcoral;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0.5, 0, 0.5);
+}
+
+img {
+width: 200px;
+}
+
+.input {
+    border: 2px solid #E8E8E8;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #212121;
+    font-size: small;
+    font-weight: bold;
+    text-align: center;
+}
+.input:focus {
+    outline-color: white;
+    background-color: #212121;
+    color: #E8E8E8;
+    box-shadow: 5px 5px #888888;
+}
