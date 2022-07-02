@@ -3,10 +3,11 @@
 
 CREATE TABLE tasks (
     "id" serial PRIMARY KEY,
-    "taskTitle" varchar(20) NOT NULL,
-    "taskDescription" varchar(120)
+    "taskTitle" varchar(40) NOT NULL,
+    "taskDescription" varchar(120),
+    "taskCompleted" boolean 
 );
 
-INSERT INTO koalas (taskTitle, taskDescription) 
-VALUES ('Store', 'Groceries, Products'), 
-('Gym', 'RUN, WEIGHTS'); 
+INSERT INTO tasks (taskTitle, taskDescription, taskCompleted) 
+VALUES ('Store', 'Groceries, Products', false ), 
+('Gym', 'RUN, WEIGHTS', false ); 

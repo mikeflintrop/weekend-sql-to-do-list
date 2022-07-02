@@ -7,7 +7,7 @@ const pool = require('../modules/pool.js');
 
 // GET
 router.get('/', (req, res) => {
-    let queryText = 'SELECT * FROM "koalas" ORDER BY "id";';
+    let queryText = 'SELECT * FROM "tasks" ORDER BY "id";';
     pool.query(queryText)
         .then((result) =>{
             res.send(result.rows);
@@ -20,32 +20,32 @@ router.get('/', (req, res) => {
 
 // POST
 router.post('/', (req, res) => {
-    const newKoala = req.body;
+    const newTask = req.body;
     const queryText = `
-        INSERT INTO "koalas" ("name", "gender", "age", "ready_to_transfer", "notes")
-        VALUES ($1, $2, $3, $4, $5);
+        INSERT INTO "tasks" ("taskTitle", "taskDescription", "taskCompleted")
+        VALUES ($1, $2, $3);
     `;
-    pool.query(queryText, [newKoala.name, newKoala.gender, newKoala.age, newKoala.readyForTransfer, newKoala.notes])
+    pool.query(queryText, [newTask.taskTitle, newTask.taskDescription, newTask.taskCompleted])
     .then((result)=>{
         res.sendStatus(201);
     }).catch((error)=>{
-        console.log('AY! error posting to db', error);
+        console.log('AY! error POSTing to db', error);
         res.sendStatus(500)
     })
 });
 
 // PUT
 router.put('/:id', (req, res) => {
-    let koalaId = req.params.id;
-    console.log(koalaId);
-    let queryText = 'UPDATE "koalas" SET "ready_to_transfer" = TRUE WHERE "id" = $1;';
+    let taskId = req.params.id;
+    console.log(taskId);
+    let queryText = 'UPDATE "tasks" SET "taskCompleted" = TRUE WHERE "id" = $1;';
 
-    pool.query(queryText, [koalaId])
+    pool.query(queryText, [taskId])
     .then((dbResponse)=>{
         res.send(dbResponse.rows)
     })
     .catch((error)=>{
-        console.log(`AY! error updating with query ${queryText}: ${error}`);
+        console.log(`AY! error UPDATEing with query ${queryText}: ${error}`);
         res.sendStatus(500);
     })
 })
@@ -54,14 +54,14 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     let reqId = req.params.id
     console.log(`A delete request has been sent for ID ${reqId}`);
-    let queryText = 'DELETE FROM "koalas" WHERE "id" = $1;';
+    let queryText = 'DELETE FROM "tasks" WHERE "id" = $1;';
     pool.query(queryText, [reqId])
         .then(() =>{
-            console.log('koala deleted');
+            console.log('task deleted');
             res.sendStatus(200);
         })
         .catch((error) => {
-            console.log(`AY! error deleting with query ${queryText}: ${error}`);
+            console.log(`AY! error DELETEing with query ${queryText}: ${error}`);
             res.sendStatus(500); // a good server always responds
         })
 });

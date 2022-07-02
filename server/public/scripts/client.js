@@ -4,114 +4,104 @@ $(document).ready(function () {
 	console.log('JQ');
 	// Establish Click Listeners
 	setupClickListeners();
-	// load existing koalas on page load
-	getKoalas();
-	$(document).on('click', '#transferBtn', updateKoala);
-	$(document).on('click', '#deleteBtn', deleteKoala);
+	// load existing tasks on page load
+	getTasks();
+	$(document).on('click', '#completedBtn', completedTask);
+	$(document).on('click', '#deleteBtn', deleteTask);
 }); // end doc ready
 
 function setupClickListeners() {
-	$('#addKoalaBtn').on('click', function () {
-		// Nate - changed class to #addKoalaBtn
-		console.log('in addKoalaBtn on click');
+	$('#addTaskButton').on('click', function () {
+		console.log('in addTaskButton on click');
 		// get user input and put in an object
-		// NOT WORKING YET :(
-		// using a test object
-		//change
-		let koalaToSend = {
-			name: $('#nameInput').val(),
-			age: $('#ageInput').val(),
-			gender: $('#genderInput').val(),
-			readyForTransfer: $('#transferInput').val(),
-			notes: $('#notesInput').val(),
+		let taskToSend = {
+			taskTitle: $('#taskTitleInput').val(),
+			taskDescription: $('#taskDescriptionInput').val(),
+			taskCompleted: $('#completedInput').val(),
 		};
-		// call saveKoala with the new obejct
-		console.log('koala to send', koalaToSend);
+		// call taskToSend with the new obejct
+		console.log('task to send', taskToSend);
 		$.ajax({
-			url: '/koalas',
+			url: '/tasks',
 			method: 'POST',
-			data: koalaToSend,
+			data: taskToSend,
 		})
 			.then(function (response) {
-				console.log('test GET response,', response);
-				getKoalas();
+				console.log('test POST response,', response);
+				getTasks();
 			})
 			.catch(function (error) {
 				console.log(error);
-				alert('Error in koalaToSend');
+				alert('Error in taskToSend');
 			});
-		console.log('end of koalaToSend');
+		console.log('end of taskToSend');
 	});
-}
+} // end setupClickListeners
 
-function getKoalas() {
-	console.log('in getKoalas');
-
+function getTasks() {
+	console.log('in getTasks');
+	// ajax call to server to get tasks
 	$.ajax({
-		url: '/koalas',
+		url: '/tasks',
 		method: 'GET',
 	})
 		.then(function (response) {
 			console.log('test GET response,', response);
-			renderKoala(response);
+			renderTasks(response);
 		})
 		.catch(function (error) {
 			console.log(error);
-			alert('Error in getKoalas');
+			alert('Error in getTasks');
 		});
-	console.log('end of getKoalas');
+	console.log('end of getTasks');
+} // end getTasks
 
-	// ajax call to server to get koalas
-} // end getKoalas
-
-function renderKoala(koalas) {
+function renderTasks(tasks) {
 	// changed to render koalas
-	console.log('in renderKoala', koalas);
+	console.log('in renderTasks', tasks);
 	// ajax call to server to get koalas --  ignore this line
-	$('#koalaInfo').empty();
-	for (let koala of koalas) {
-		console.log(koala);
-		$('#koalaInfo').append(`
+	$('#taskTable').empty();
+	for (let task of tasks) {
+		console.log(task);
+		$('#taskTable').append(`
     <tr>
-    <td>${koala.name}</td>
-    <td>${koala.age}</td>
-    <td>${koala.gender}</td>
-    <td>${koala.ready_to_transfer}</td>
-    <td>${koala.notes}</td>
-    <td><button data-id="${koala.id}" id="transferBtn">Transfer</button></td>
-    <td><button data-id="${koala.id}" id="deleteBtn">Delete</button></td>
+    <td>${task.taskTitle}</td>
+    <td>${task.taskDescription}</td>
+    <td>${task.taskCompleted}</td>
+    <td><button data-id="${task.id}" id="completedBtn">Complete</button></td>
+    <td><button data-id="${task.id}" id="deleteBtn">Delete</button></td>
     </tr>
     `);
 	}
 	$('input').val('');
-}
+} // end renderTasks
 
-function deleteKoala() {
-	let koalaId = $(this).data('id');
+function deleteTask() {
+	let taskId = $(this).data('id');
 	$.ajax({
 		type: 'DELETE',
-		url: `/koalas/${koalaId}`,
+		url: `/tasks/${taskId}`,
 	})
 		.then(function (response) {
-			console.log('its deleted');
-			getKoalas();
+			console.log('its DELETED');
+			getTasks();
 		})
 		.catch(function (error) {
-			alert('Error deleting Daddy O', error);
+			alert('Error DELETEing', error);
 		});
 }
 
-function updateKoala() {
-	let koalaId = $(this).data('id');
+function completedTask() {
+	let taskId = $(this).data('id');
 	$.ajax({
 		type: 'PUT',
-		url: `/koalas/${koalaId}`,
+		url: `/tasks/${taskId}`,
 	})
 		.then(function (response) {
 			console.log('its UPDATED');
-			getKoalas();
+			getTasks();
 		})
 		.catch(function (error) {
-			alert('Error UPDATED Daddy O', error);
+			alert('Error UPDATEing', error);
 		});
 }
