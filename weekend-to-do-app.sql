@@ -8,6 +8,6 @@ CREATE TABLE tasks (
     "taskCompleted" boolean 
 );
 
-INSERT INTO tasks (taskTitle, taskDescription, taskCompleted) 
+INSERT INTO tasks ("taskTitle", "taskDescription", "taskCompleted") 
 VALUES ('Store', 'Groceries, Products', false ), 
 ('Gym', 'RUN, WEIGHTS', false ); 
