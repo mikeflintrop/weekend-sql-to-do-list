@@ -64,11 +64,11 @@ function renderTasks(tasks) {
 	for (let task of tasks) {
 		console.log(task);
 		$('#taskTable').append(`
-    <tr>
+    <tr data-status="${task.taskCompleted}">
     <td>${task.taskTitle}</td>
     <td>${task.taskDescription}</td>
     <td>${task.taskCompleted}</td>
-    <td><button data-id="${task.id}" id="completedBtn">Complete</button></td>
+    <td><button data-id="${task.id}" data-status="${task.taskCompleted}" id="completedBtn">Complete</button></td>
     <td><button data-id="${task.id}" id="deleteBtn">Delete</button></td>
     </tr>
     `);

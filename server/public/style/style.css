@@ -1,17 +1,46 @@
 header {
-background-color: lightblue;
+    background-color: #FA9714;
+}
 
+body {
+    background-color: #146AFA;
+    text-align: center;
+}
+
+#addTask {
+    background-color: #DE674F;
+}
+
+#taskHeader {
+    background-color: #F520CA;
+}
+
+th {
+    background-color: #5B12DE;
+    color: whitesmoke;
+}
+
+tr {
+    background-color: gold;
 }
 
 table, th, td {
     border: 1px;
     border-collapse: collapse;
     border-style: solid;
-
+    width: 100%;
+    min-height: fit-content;
+    text-align: center;
+    align-items: center;
+    table-layout: fixed;
 }
 
-tr:nth-child(even){
+/* tr:nth-child(even){
     background-color: lightgrey;
+} */
+[data-status = "true"] {
+    background-color: lightgreen;
+
 }
 
 tr:hover{
@@ -32,14 +61,17 @@ button:hover{
     cursor: pointer;
     box-shadow: 0 10px 20px rgba(0, 0.5, 0, 0.5);
 }
-#deleteBtn:hover {
-    background-color: lightcoral;
+
+#addTaskButton:hover {
+    background-color: lightskyblue;
     cursor: pointer;
     box-shadow: 0 10px 20px rgba(0, 0.5, 0, 0.5);
 }
 
-img {
-width: 200px;
+#deleteBtn:hover {
+    background-color: lightcoral;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0.5, 0, 0.5);
 }
 
 .input {
